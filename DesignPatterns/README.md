@@ -398,11 +398,11 @@ Builder设计模式就是为了解决这样的问题，将此问题拆分成两�
 
 那么我们先使用Helper对象创建出需要的每一块小拼图，然后堆放在那里；
 
-![散乱的拼图](images\sanluan.png "拼图")
+![散乱的拼图](https://github.com/masterybear/JavaEE/blob/main/DesignPatterns/images/sanluan.png "拼图")
 
 再使用Builder对象，将这些无序的拼图按照次序组合为成品。
 
-![拼图](images\pintu.png "拼图")
+![拼图](https://github.com/masterybear/JavaEE/blob/main/DesignPatterns/images/pintu.png "拼图")
 
 ## 实例
 
