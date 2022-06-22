@@ -4,9 +4,17 @@
 
 ## 简介
 
-互联网持久框架（persistence framework）
+> 互联网持久框架（persistence framework）
+>
+> 持久化，即将数据持久保存，将数据存储到硬盘，即使断电、也依然存在。而持久化框架则是介于应用程序与数据库之间的中间件。
 
-持久化，即将数据持久保存，将数据存储到硬盘，即使断电、也依然存在。而持久化框架则是介于应用程序与数据库之间的中间件。
+诚然，MyBatis是一个Java持久化框架，它通过XML描述符或注解把对象与存储过程或SQL语句关联起来，映射成数据库内对应的记录。
+
+特点：与其他对象关系映射框架不同，MyBatis没有将Java对象与数据库表关联起来，而是将Java方法与SQL语句关联。
+
+![working](images/image1_1.png "简介")
+
+**MyBatis所处的位置**
 
 ![数据交换](images\image1.png "使用MyBatis访问数据库")
 
@@ -245,3 +253,18 @@ public interface BlogMapper {
 
 > 虽然从技术层面上来讲，任何映射器实例的最大作用域与请求它们的 SqlSession 相同。但方法作用域才是映射器实例的最合适的作用域。
 > 映射器实例应该在调用它们的方法中被获取，使用完毕之后即可丢弃。
+
+## Concise
+
+> 此模块将简明的表述重点知识，亦或是对大段内容的梳理。
+
+![instance](images/concise.png "实例")
+
+在second中有提到过，Mybatis有两类xml文件，
+大体上来说，他们的任务都是完成映射，一个是Builder通过XML配置文件去完成数据库的映射；另一个是相关SQL语句，为映射器提供的映射文件。
+
+Builder、Factory、Session同属工具类函数，将他们放在一块；映射器接口和POJO同属被映射的简单文件。
+
+最后再加上main文件和logging文件。
+
+整体即：2（XML映射文件）+ 3（1工具类 + 2简单文件——3被映射文件）+ 2（main文件和logging文件） = 7.
