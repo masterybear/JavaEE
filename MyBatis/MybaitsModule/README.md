@@ -16,7 +16,7 @@
 
 **MyBatis所处的位置**
 
-![数据交换](https://github.com/masterybear/JavaEE/blob/main/MyBatis/images/image1.png "使用MyBatis访问数据库")
+![数据交换](images\image1.png "使用MyBatis访问数据库")
 
 ## 优点
 
@@ -26,7 +26,7 @@
 
 ## 四大核心组件
 
-![核心组件](https://github.com/masterybear/JavaEE/blob/main/MyBatis/images/image2.png "核心组件")
+![核心组件](images\image2.png "核心组件")
 
 ### SqlSessionFactoryBuilder
 
@@ -52,7 +52,7 @@
 
 1. SqlSessionFactoryBuilder：SqlSessionFactory构造器
 
-![workPattern](https://github.com/masterybear/JavaEE/blob/main/MyBatis/images/image3.png "SqlSessionFactoryBuilder")
+![workPattern](images\image3.png "SqlSessionFactoryBuilder")
 
 ### Second
 
@@ -64,7 +64,7 @@
 
    每一个基于MyBatis的应用都是以SqlSessionFactory实例为中心的。
 
-![workPattern](https://github.com/masterybear/JavaEE/blob/main/MyBatis/images/image4.png "SqlSessionFactory")
+![workPattern](images/image4.png "SqlSessionFactory")
 
 > MyBatis中的XML分为两类：基础配置文件与映射文件
 
@@ -124,7 +124,7 @@ SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(confi
 
 > SqlSession提供了在数据库执行SQL命令所需的全部方法。
 
-![interface](https://github.com/masterybear/JavaEE/blob/main/MyBatis/images/image5.png "sqlSession")
+![interface](images\image5.png "sqlSession")
 
 作用：
 
@@ -253,7 +253,6 @@ public interface BlogMapper {
 
 > 虽然从技术层面上来讲，任何映射器实例的最大作用域与请求它们的 SqlSession 相同。但方法作用域才是映射器实例的最合适的作用域。
 > 映射器实例应该在调用它们的方法中被获取，使用完毕之后即可丢弃。
-<<<<<<< HEAD
 
 ## Concise
 
@@ -269,5 +268,3 @@ Builder、Factory、Session同属工具类函数，将他们放在一块；映�
 最后再加上main文件和logging文件。
 
 整体即：2（XML映射文件）+ 3（1工具类 + 2简单文件——3被映射文件）+ 2（main文件和logging文件） = 7.
-=======
->>>>>>> 845150db576848be9a29afcefaae84a681567b0e
