@@ -16,7 +16,7 @@
 
 **MyBatis所处的位置**
 
-![数据交换](images\image1.png "使用MyBatis访问数据库")
+![数据交换](images/image1.png "使用MyBatis访问数据库")
 
 ## 优点
 
@@ -26,7 +26,7 @@
 
 ## 四大核心组件
 
-![核心组件](images\image2.png "核心组件")
+![核心组件](images/image2.png "核心组件")
 
 ### SqlSessionFactoryBuilder
 
@@ -52,7 +52,7 @@
 
 1. SqlSessionFactoryBuilder：SqlSessionFactory构造器
 
-![workPattern](images\image3.png "SqlSessionFactoryBuilder")
+![workPattern](images/image3.png "SqlSessionFactoryBuilder")
 
 ### Second
 
@@ -124,7 +124,7 @@ SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(confi
 
 > SqlSession提供了在数据库执行SQL命令所需的全部方法。
 
-![interface](images\image5.png "sqlSession")
+![interface](images/image5.png "sqlSession")
 
 作用：
 
