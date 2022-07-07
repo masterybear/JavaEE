@@ -6,9 +6,15 @@
 
 > 互联网持久框架（persistence framework）
 >
-> 持久化，即将数据持久保存，将数据存储到硬盘，即使断电、也依然存在。而持久化框架则是介于应用程序与数据库之间的中间件。
+> 持久化，即将数据持久保存，将数据存储到硬盘，即使断电、也依然存在。
+>
+> 持久化框架：就是协助并自动将程序数据存储到数据库中，作为介于应用程序与数据库之间的中间件，对任意一方所起到的作用都是去差异化，用以进行双方的交互。
+>
+> ORM（Object Relational Mapping）：对象关系映射
+>
+> 许多持久性框架也是对象关系映射工具，此类框架将应用程序域中的对象映射到需要在数据库中持久化的数据。可以使用XML文件或注释来定义映射。
 
-诚然，MyBatis是一个Java持久化框架，它通过XML描述符或注解把对象与存储过程或SQL语句关联起来，映射成数据库内对应的记录。
+MyBatis是一个Java持久化框架，它通过XML描述符或注解把对象与存储过程或SQL语句关联起来，映射成数据库内对应的记录。
 
 特点：与其他对象关系映射框架不同，MyBatis没有将Java对象与数据库表关联起来，而是将Java方法与SQL语句关联。
 
@@ -16,7 +22,7 @@
 
 **MyBatis所处的位置**
 
-![数据交换](images/image1.png "使用MyBatis访问数据库")
+![数据交换](images\image1.png "使用MyBatis访问数据库")
 
 ## 优点
 
@@ -26,7 +32,7 @@
 
 ## 四大核心组件
 
-![核心组件](images/image2.png "核心组件")
+![核心组件](images\image2.png "核心组件")
 
 ### SqlSessionFactoryBuilder
 
@@ -52,7 +58,7 @@
 
 1. SqlSessionFactoryBuilder：SqlSessionFactory构造器
 
-![workPattern](images/image3.png "SqlSessionFactoryBuilder")
+![workPattern](images\image3.png "SqlSessionFactoryBuilder")
 
 ### Second
 
@@ -124,7 +130,7 @@ SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(confi
 
 > SqlSession提供了在数据库执行SQL命令所需的全部方法。
 
-![interface](images/image5.png "sqlSession")
+![interface](images\image5.png "sqlSession")
 
 作用：
 
