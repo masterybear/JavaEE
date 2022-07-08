@@ -4,7 +4,7 @@
 
 MyBatis 的配置文件包含了会深深影响 MyBatis 行为的设置和属性信息。 配置文档的顶层结构如下：
 
-![结构](images/image1.png "文件结构")
+![结构](images/Config_images/image1.png "文件结构")
 
 # 连接池
 
@@ -12,7 +12,7 @@ MyBatis 的配置文件包含了会深深影响 MyBatis 行为的设置和属性
 
 连接池全称为数据库连接池，英文：connection pool，连接池是维护数据库连接的缓存，一边在将来需要对数据库发出请求时可以重用连接。
 
-在数据连接的过程中，创建连接后，将连接放在池中并再次使用，以减少对连接的反复’创建-关闭‘，大大降低了性能消耗。
+在数据连接的过程中，创建连接后，将连接放在池中并再次使用，以减少对连接的反复“创建-关闭”，大大降低了性能消耗。
 
 ---
 
@@ -156,7 +156,7 @@ public class Author {
 
 mybatis-java内建别名
 
-![内建别名](images/image2.png "内建别名")
+![内建别名](images/Config_images/image2.png "内建别名")
 
 
 
@@ -164,7 +164,7 @@ mybatis-java内建别名
 
 ## 类型处理器（typeHandlers）
 
-![working](images/image3.png "作用于")
+![working](images/Config_images/image3.png "作用于")
 
 typeHandler分为javaType与jdbcType
 
@@ -178,7 +178,7 @@ typeHandler分为javaType与jdbcType
 
 Mybatis系统中的预定义
 
-![预定义](images/image4.png "系统预定义")
+![预定义](images/Config_images/image4.png "系统预定义")
 
 可以重写已有的类型处理器或创建自己的类型处理器。
 

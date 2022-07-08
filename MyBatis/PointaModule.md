@@ -18,11 +18,11 @@ MyBatis是一个Java持久化框架，它通过XML描述符或注解把对象与
 
 特点：与其他对象关系映射框架不同，MyBatis没有将Java对象与数据库表关联起来，而是将Java方法与SQL语句关联。
 
-![working](images/image1_1.png "简介")
+![working](images/Module_images/image1_1.png "简介")
 
 **MyBatis所处的位置**
 
-![数据交换](images\image1.png "使用MyBatis访问数据库")
+![数据交换](images/Module_images\image1.png "使用MyBatis访问数据库")
 
 ## 优点
 
@@ -32,7 +32,7 @@ MyBatis是一个Java持久化框架，它通过XML描述符或注解把对象与
 
 ## 四大核心组件
 
-![核心组件](images\image2.png "核心组件")
+![核心组件](images/Module_images/image2.png "核心组件")
 
 ### SqlSessionFactoryBuilder
 
@@ -58,7 +58,7 @@ MyBatis是一个Java持久化框架，它通过XML描述符或注解把对象与
 
 1. SqlSessionFactoryBuilder：SqlSessionFactory构造器
 
-![workPattern](images\image3.png "SqlSessionFactoryBuilder")
+![workPattern](images/Module_images/image3.png "SqlSessionFactoryBuilder")
 
 ### Second
 
@@ -70,7 +70,7 @@ MyBatis是一个Java持久化框架，它通过XML描述符或注解把对象与
 
    每一个基于MyBatis的应用都是以SqlSessionFactory实例为中心的。
 
-![workPattern](images/image4.png "SqlSessionFactory")
+![workPattern](images/Module_images/image4.png "SqlSessionFactory")
 
 > MyBatis中的XML分为两类：基础配置文件与映射文件
 
@@ -130,7 +130,7 @@ SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(confi
 
 > SqlSession提供了在数据库执行SQL命令所需的全部方法。
 
-![interface](images\image5.png "sqlSession")
+![interface](images/Module_images/image5.png "sqlSession")
 
 作用：
 
@@ -264,7 +264,7 @@ public interface BlogMapper {
 
 > 此模块将简明的表述重点知识，亦或是对大段内容的梳理。
 
-![instance](images/concise.png "实例")
+![instance](images/Module_images/concise.png "实例")
 
 在second中有提到过，Mybatis有两类xml文件，
 大体上来说，他们的任务都是完成映射，一个是Builder通过XML配置文件去完成数据库的映射；另一个是相关SQL语句，为映射器提供的映射文件。

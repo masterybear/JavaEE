@@ -38,9 +38,7 @@ MyBatis 致力于减少使用成本，让用户能更专注于 SQL 代码。
 
 SQL 映射文件只有很少的几个顶级元素（按照应被定义的顺序列出）：
 
-![overview](images/image1.png "概述")
-
-## 
+![overview](images/Mapper_images/image1.png "概述")
 
 ---
 
@@ -74,7 +72,7 @@ select 元素允许你配置很多属性来配置每条语句的行为细节。
   resultSetType="FORWARD_ONLY">
 ```
 
-
+![](images/Mapper_images/image2.png)
 
 ---
 
@@ -130,7 +128,7 @@ select 元素允许你配置很多属性来配置每条语句的行为细节。
 </delete>
 ```
 
-
+![](images/Mapper_images/image3.png)
 
 ---
 
@@ -376,7 +374,7 @@ public class User {
 
 下面是`resultMap` 元素的概念视图。
 
-![property](images/image4.png "子元素")
+![property](images/Mapper_images/image4.png "子元素")
 
 ---
 
@@ -384,7 +382,7 @@ public class User {
 
 1、`ResultMap`的属性列表
 
-![ResultMap](images/image5.png "ResultMap")
+![ResultMap](images/Mapper_images/image5.png "ResultMap")
 
 2、 **id & result**
 
@@ -393,7 +391,7 @@ public class User {
 <result property="subject" column="post_subject"/>
 ```
 
-![](images/image5_1.png)
+![](images/Mapper_images/image5_1.png)
 
 result元素对数据库的列值进行了映射；而id元素是特殊的result元素，其中的属性可以作为对象的标识符。
 
@@ -435,7 +433,7 @@ public class User {
 
 其余属性
 
-![](images/image5_2.png)
+![](images/Mapper_images/image5_2.png)
 
 ## 级联
 
@@ -610,7 +608,7 @@ Author 的结果映射定义如下
 
 ### 关联的多结果集（ResultSet）
 
-![](images/image5_3.png)
+![](images/Mapper_images/image5_3.png)
 
 从版本 3.2.3 开始，MyBatis 提供了另一种解决 N+1 查询问题的方法。
 
