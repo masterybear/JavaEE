@@ -22,7 +22,7 @@ MyBatis是一个Java持久化框架，它通过XML描述符或注解把对象与
 
 **MyBatis所处的位置**
 
-![数据交换](images/Module_images/image1.png "使用MyBatis访问数据库")
+![数据交换](images/Module_images\image1.png "使用MyBatis访问数据库")
 
 ## 优点
 
