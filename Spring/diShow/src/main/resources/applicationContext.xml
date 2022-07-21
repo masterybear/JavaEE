@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:component-scan base-package="org.example.service" use-default-filters="false">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Service"/>
+    </context:component-scan>
+
+    <bean class="org.example.springDemo.User" id="user1">
+        <constructor-arg index="0" value="张三"/>
+        <constructor-arg index="1" value="zhangsan@email.com"/>
+        <constructor-arg index="2" value="1"/>
+    </bean>
+
+<!--    <bean class="org.example.springDemo.User" id="user"/>-->
+
+    <bean class="org.example.springDemo.User" id="user2">
+        <property name="username" value="李四"/>
+        <property name="email" value="lisi@email.com"/>
+        <property name="id" value="2"/>
+    </bean>
+    
+    <bean class="org.example.springDemo.User" id="user3">
+        <property name="username" value="王五"/>
+        <property name="email" value="wangwu@email.com"/>
+        <property name="id" value="3"/>
+        <property name="cat" ref="cat1"/>
+    </bean>
+
+    <bean class="org.example.springDemo.Cat" id="cat1">
+        <property name="age" value="3"/>
+        <property name="name" value="六一"/>
+    </bean>
+
+    <bean class="org.example.springDemo.User" id="user4">
+        <property name="cats">
+            <array>
+                <ref bean="cat1"/>
+                <ref bean="cat2"/>
+                <bean class="org.example.springDemo.Cat" id="cat3">
+                    <property name="name" value="八一"/>
+                    <property name="age" value="2"/>
+                </bean>
+            </array>
+        </property>
+
+        <property name="hobby">
+            <list>
+                <value>足球</value>
+                <value>乒乓球</value>
+                <value>羽毛球</value>
+            </list>
+        </property>
+
+        <property name="details">
+            <map>
+                <entry key="gender" value="男"/>
+                <entry key="age" value="30"/>
+            </map>
+        </property>
+
+        <property name="info">
+            <props>
+                <prop key="phone">124356789</prop>
+            </props>
+        </property>
+    </bean>
+    <bean class="org.example.springDemo.Cat" id="cat2">
+        <property name="age" value="4"/>
+        <property name="name" value="五一"/>
+    </bean>
+
+<!--    <bean class="org.example.factoryDI.OkHttpStaticFactory" factory-method="getInstance" id="okHttpClient"/>-->
+
+    <bean class="org.example.factoryDI.OkHttpFactory" id="okHttpFactory"/>
+    <bean class="okhttp3.OkHttpClient" factory-bean="okHttpFactory" factory-method="getInstance" id="okHttpClient"/>
+</beans>
