@@ -295,6 +295,16 @@ public class JavaConfigTest {
 运行结果：Hello_张三
 ```
 
+
+
+## @ImportResource
+
+使用此注解可以将xml配置文件加载到java注解配置类中，即混合配置。
+
+```java
+@ImportResource("ApplicationContext.xml")
+```
+
 # 自动扫描注入
 
 ---
@@ -456,3 +466,160 @@ public class JavaConfig {
     }
 }
 ```
+
+---
+
+## @Profile
+
+在使用DI来依赖注入的时候，能够根据`@profile`标明的环境，将注入符合当前运行环境的相应的bean。
+
+开发环境：dev
+
+> 开发环境是程序猿们专门用于开发的服务器，配置可以比较随意，为了开发调试方便，一般打开全部错误报告。
+
+生产环境：prod
+
+> 是指正式提供对外服务的，一般会关掉错误报告，打开错误日志。
+
+测试环境：test
+
+> 一般是克隆一份生产环境的配置，一个程序在测试环境工作不正常，那么肯定不能把它发布到生产机上。
+
+标记类
+
+```java
+@Configuration
+public class JavaConfig {
+	@Bean
+    @Profile("dev")
+    DataSource devDs() {
+        DataSource ds = new DataSource();
+        ds.setUrl("jdbc:mysql:dev");
+        ds.setUsername("root");
+        ds.setPassword("1234e14");
+        return ds;
+    }
+
+    @Bean
+    @Profile("prod")
+    DataSource prodDs() {
+        DataSource ds = new DataSource();
+        ds.setUrl("jdbc:mysql:prod");
+        ds.setUsername("root");
+        ds.setPassword("134rewafseght");
+        return ds;
+    }
+}
+```
+
+示例类
+
+```java
+public class DataSource {
+	private String url;
+    private String username;
+    private String password;
+    
+    ***setter&getter***
+ }
+```
+
+main
+
+```java
+AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
+ctx.getEnvironment().setActiveProfiles("prod");
+ctx.register(JavaConfig.class);
+ctx.refresh();
+DataSource ds = ctx.getBean(DataSource.class);
+System.out.println("ds = " + ds);
+```
+
+**XML**
+
+```xml
+<beans profile="dev">
+    <bean class="org.example.DataSource" id="devDs">
+        <property name="url" value="jdbc:mysql:dev"/>
+        <property name="username" value="root"/>
+        <property name="password" value="1234e14"/>
+    </bean>
+</beans>
+
+<beans profile="prod">
+    <bean class="org.example.DataSource" id="prodDs">
+        <property name="url" value="jdbc:mysql:prod"/>
+        <property name="username" value="root"/>
+        <property name="password" value="134rewafseght"/>
+    </bean>
+</beans>
+```
+
+main
+
+```java
+ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext();
+ctx.getEnvironment().setActiveProfiles("dev");
+ctx.setConfigLocation("applicationContext.xml");
+ctx.refresh();
+DataSource ds = ctx.getBean(DataSource.class);
+System.out.println("ds = " + ds);
+```
+
+# bean的作用域
+
+使用springIoC创建实例时，是否，每次getbean都返回一个新的实例呢？
+
+可以配置scope属性来设置返回实例是否相同。
+
+设置scope=prototype，每次获取到的都是新的实例。（多个实例）
+设置scope=singleton，每次获取到的都是相同的示例。（单个实例）
+
+## Java代码
+
+```java
+{
+
+    @Bean
+    @Profile("dev")
+    @Scope("singleton")
+    DataSource devDs() {
+        DataSource ds = new DataSource();
+        ds.setUrl("jdbc:mysql:dev");
+        ds.setUsername("root");
+        ds.setPassword("1234e14");
+        return ds;
+    }
+
+    @Bean
+    @Profile("prod")
+    @Scope("prototype")
+    DataSource prodDs() {
+        DataSource ds = new DataSource();
+        ds.setUrl("jdbc:mysql:prod");
+        ds.setUsername("root");
+        ds.setPassword("134rewafseght");
+        return ds;
+    }
+}
+```
+
+## XML
+
+```xml
+<bean class="org.example.User" id="user1" scope="singleton">
+    <property name="username" value="张三"/>
+    <property name="email" value="zhangsan@email.com"/>
+    <property name="id" value="1"/>
+</bean>
+
+<bean class="org.example.User" id="user2" scope="prototype">
+    <property name="username" value="李四"/>
+    <property name="email" value="lisi@email.com"/>
+    <property name="id" value="2"/>
+</bean>
+```
+
+# Aware接口
+
+bean本身是麻木的、不会做出反应的，可以通过实现aware接口来使得使bean拥有感知的能力。
