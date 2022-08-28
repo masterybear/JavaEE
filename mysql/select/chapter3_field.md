@@ -65,6 +65,8 @@ WHERE order_num = 20005;
 
 ---
 
+## 其他
+
 还有一些有趣的计算字段和技巧
 
 ```mysql
@@ -99,7 +101,7 @@ ORDER BY vend_name;
 
 ---
 
-# 常用的文本处理函数
+## 常用的文本处理函数
 
 <img src="images\function02.png" style="zoom:50%;" />
 
@@ -119,7 +121,7 @@ FROM customers;
 SELECT cust_name,cust_contact
 FROM customers
 WHERE cust_contact = 'Y Lie';
--- 'Y Lie'和'Y Lee'的写法不同，但读音相同，这样查找显然将返回一个空集。
+-- 'Y Lie'和'Y Lee'的写法不同，但读音相同，这样查找显然将得到一个空集。
 ```
 
 ![](images\function04.png)
@@ -136,7 +138,94 @@ WHERE Soundex(cust_contact) = Soundex('Y Lie');
 
 ---
 
-# 常用日期和时间处理函数
+## 常用日期和时间处理函数
 
 <img src="images\function06.png" style="zoom:50%;" />
+
+> 无论什么时候指定一个日期，其格式都必须是：`yyyy-mm-dd`。
+
+## 基础
+
+```mysql
+SELECT * FROM orders;
+```
+
+![](images\function07.png)
+
+```mysql
+SELECT cust_id, order_num
+FROM orders
+WHERE order_date = '2005-09-01';
+-- yyyy-mm-dd
+```
+
+![](images\function08.png)
+
+---
+
+## 进阶1
+
+接下来进行更细致的检索，在检索前先插入一条新的数据：
+
+```mysql
+INSERT INTO orders(order_num, order_date, cust_id)
+VALUES(20010, '2022-8-28 20:17:19', 10001);
+```
+
+```mysql
+SELECT * FROM orders;
+```
+
+![](images\function09.png)
+
+```mysql
+SELECT cust_id, order_num
+FROM orders
+WHERE order_date = '2022-8-28';
+-- 这将得到一个空集，即使日期在数据中能够匹配，但显然时间不对。
+```
+
+![](images\function10.png)
+
+```mysql
+SELECT cust_id, order_num
+FROM orders
+WHERE Date(order_date) = '2022-8-28';
+-- 返回日期时间的日期部分。
+-- 在实际应用中，显然应该使用这种方法进行日期时间数据的检索方式（即使用Date()函数）。
+```
+
+![](images\function11.png)
+
+---
+
+## 进阶2
+
+```mysql
+SELECT cust_id, order_num
+FROM orders
+WHERE Date(order_date) BETWEEN '2005-09-01' AND '2005-09-30';
+-- 检索某一时间段
+```
+
+![](images\function12.png)
+
+---
+
+## 进阶3
+
+```mysql
+SELECT cust_id,order_num
+FROM orders
+WHERE Year(order_date) = 2005 AND Month(order_date) = 9;
+-- 进行2005年9月的数据过滤。
+```
+
+![](images\function13.png)
+
+---
+
+## 常用数值处理函数
+
+![](images\function14.png)
 
