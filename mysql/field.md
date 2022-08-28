@@ -15,8 +15,6 @@ ORDER BY vend_name;
 
 ![](images\field01.png)
 
-
-
 ---
 
 ## `Trim`函数
@@ -35,8 +33,6 @@ ORDER BY vend_name;
 
 ![](images\field02.png)
 
-
-
 ---
 
 ## 别名
@@ -50,8 +46,6 @@ ORDER BY vend_name;
 ```
 
 ![](images\field03.png)
-
-
 
 ---
 
@@ -86,6 +80,63 @@ SELECT Now();
 -- 返回"现在"的时间。
 ```
 
+---
 
+# 数据处理函数
+
+> 其实上述的计算字段，实际上就是数据处理函数的使用，接下来介绍更多常用的数据处理函数。
 
 ---
+
+```mysql
+SELECT vend_name,Upper(vend_name) AS vend_name_upcase
+FROM vendors
+ORDER BY vend_name;
+-- Upper()函数可将文本全部转换为大写。
+```
+
+![](images\function01.png)
+
+---
+
+# 常用的文本处理函数
+
+<img src="images\function02.png" style="zoom:50%;" />
+
+> 有关`Soundex()`，SOUNDEX是一个将任何文本串转换为描述其语音表示的字母数字模式的算法。
+
+话不多说，实例展示
+
+```mysql
+SELECT cust_name,cust_contact
+FROM customers;
+-- 先进行一下正常的基础检索
+```
+
+![](images\function03.png)
+
+```mysql
+SELECT cust_name,cust_contact
+FROM customers
+WHERE cust_contact = 'Y Lie';
+-- 'Y Lie'和'Y Lee'的写法不同，但读音相同，这样查找显然将返回一个空集。
+```
+
+![](images\function04.png)
+
+```mysql
+SELECT cust_name,cust_contact
+FROM customers
+WHERE Soundex(cust_contact) = Soundex('Y Lie');
+-- 这就是Soundex()函数的作用
+-- SOUNDEX是一个将任何文本串转换为描述其语音表示的字母数字模式的算法。
+```
+
+![](images\function05.png)
+
+---
+
+# 常用日期和时间处理函数
+
+<img src="images\function06.png" style="zoom:50%;" />
+
