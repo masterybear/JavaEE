@@ -345,3 +345,41 @@ WHERE prod_name LIKE '_ ton anvil';
 
 ---
 
+# 子查询
+
+```mysql
+SELECT cust_name,cust_contact
+FROM customers
+WHERE cust_id IN(SELECT cust_id
+                FROM orders
+                WHERE order_num IN(SELECT order_num
+                                  FROM orderitems
+                                  WHERE prod_id = 'TNT2'));
+-- 子查询很简单，
+-- 之前的查询语句都是单独的SQL语句，而子查询就是使用另一个语句所查询的数据，使用起来就是将那条语句放在对应的位置。
+```
+
+![](images\subSelect01.png)
+
+---
+
+## 相关子查询
+
+> 涉及外部查询的子查询。
+
+```mysql
+SELECT cust_name,
+       cust_state,
+       (SELECT COUNT(*)
+        FROM orders
+        WHERE orders.cust_id = customers.cust_id) AS orders
+FROM customers
+ORDER BY cust_name;
+-- 需要注意的是，完成相关子查询时，要书写全限定名。
+-- 如果不使用全限定名那么它将不会涉及外部查询，无法得到我们希望的数据。
+```
+
+![](images\subSelect02.png)
+
+
+
