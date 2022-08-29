@@ -139,3 +139,113 @@ FROM products;
 
 ---
 
+# 分组数据
+
+## GROUP BY
+
+```mysql
+SELECT vend_id,COUNT(*) AS num_prods
+FROM products
+GROUP BY vend_id;
+-- 分组后，COUNT()会对分组的数据进行分组统计。
+```
+
+![](images\groupBy.png)
+
+---
+
+```mysql
+SELECT vend_id,COUNT(*) AS num_prods
+FROM products
+GROUP BY vend_id WITH ROLLUP;
+-- 分组的汇总，由于并未对分组的汇总指定vend_id，所以为null。
+-- 计算字段（数据处理函数）的工作属于是对检索数据的再整理，并不影响元数据，所以即便是主键也可以使用WITH ROLLUP进行分组汇总。
+```
+
+![](images\rollup.png)
+
+---
+
+## HAVING
+
+> HAVING的工作是过滤分组，之前学过的WHERE是过滤数据，但因为WHERE不能过滤分组，所以使用了HAVING。
+> 但现在情况反了过来，HAVING不仅支持过滤分组，也同样拥有WHERE所具有的一切功能。
+
+```mysql
+SELECT * FROM products WHERE vend_id = 1003;
+```
+
+![](images\whereHaving.png)
+
+```mysql
+SELECT * FROM products HAVING vend_id = 1003;
+```
+
+![](images\havingWhere.png)
+
+显然，WHERE能做的，HAVING也能做。不同的是WHERE过滤的是分组前的数据，而HAVING过滤的是分组后的数据。
+
+---
+
+```mysql
+SELECT cust_id,COUNT(*) AS orders
+FROM orders
+GROUP BY cust_id
+HAVING COUNT(*) >= 2;
+-- 包含过滤条件：组数 >= 2
+```
+
+![](images\having.png)
+
+---
+
+当然，WHERE和HAVING可以组合使用，但由于二者的特性，规定，HAVING必须放在WHERE后使用，否则会报错。
+
+```mysql
+SELECT * FROM products WHERE vend_id = 1003 HAVING prod_id = 'FB';
+```
+
+![](images\having01.png)
+
+下面的写法更加标准。
+
+---
+
+```mysql
+SELECT vend_id,COUNT(*) AS num_prods
+FROM products
+WHERE prod_price >=10
+GROUP BY vend_id
+HAVING COUNT(*) >=2;
+```
+
+![](images\having02.png)
+
+---
+
+```mysql
+SELECT vend_id,COUNT(*) AS num_prods
+FROM products
+GROUP BY vend_id
+HAVING COUNT(*) >=2;
+-- 这是去掉where部分的语句。
+```
+
+![](images\having03.png)
+
+---
+
+## 结合ORDER BY
+
+```mysql
+SELECT order_num,SUM(quantity*item_price) AS ordertotal
+FROM orderitems
+GROUP BY order_num
+HAVING SUM(quantity*item_price) >= 50
+ORDER BY ordertotal;
+```
+
+![](images\having04.png)
+
+---
+
