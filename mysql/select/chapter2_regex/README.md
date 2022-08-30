@@ -4,31 +4,39 @@
 
 # 正则表达式
 
-> 正则表达式是用来匹配文本的特殊字符集合。
+---
+
+​	正则表达式是用来匹配文本的特殊字符集合。
+
+
 
 ## 字符类
 
-![](images\regex10.png)
-
-
-
 ---
+
+![p1](images/p2_1.png)
+
+
 
 ## 重复元字符
 
-![](images\regex11.png)
-
-
-
 ---
+
+![p2](images/p2_2.png)
+
+
 
 ## 定位元字符
 
-![](images\regex12.png)
-
 ---
 
+![p3](images/p2_3.png)
+
+
+
 ## REGEXP关键字
+
+---
 
 ```mysql
 SELECT prod_name
@@ -39,11 +47,9 @@ ORDER BY prod_name;
 -- 很明显，'1000'就是一个正则表达式。
 ```
 
-![](images\regexp1.png)
+![p4](images/p2_4.png)
 
-下面是一个较为正式的正则表达式的例子
-
-## 1
+下面是一个较为正式的正则表达式的例子：
 
 ```mysql
 SELECT prod_name
@@ -52,11 +58,9 @@ WHERE prod_name REGEXP '.000'
 ORDER BY prod_name;
 ```
 
-![](images\regex2.png)
+![p5](images/p2_5.png)
 
----
 
-## 2
 
 ```mysql
 SELECT prod_name
@@ -66,11 +70,9 @@ ORDER BY prod_name;
 -- "|"类似MySQL中的OR操作符。
 ```
 
-![](images\regex3.png)
+![p6](images/p2_6.png)
 
----
 
-## 3
 
 ```mysql
 SELECT prod_name
@@ -80,11 +82,9 @@ ORDER BY prod_name;
 -- '[123] Ton'是'[1|2|3] Ton'的缩写，类似IN操作符。
 ```
 
-![](images\regex4.png)
+![p7](images/p2_7.png)
 
----
 
-## 4
 
 ```mysql
 SELECT prod_name
@@ -94,11 +94,9 @@ ORDER BY prod_name;
 -- 排除型字符集合
 ```
 
-![](images\regex5.png)
+![p8](images/p2_8.png)
 
----
 
-## 5
 
 ```mysql
 SELECT prod_name
@@ -108,11 +106,9 @@ ORDER BY prod_name;
 -- 1到5
 ```
 
-![](images\regex6.png)
+![p9](images/p2_9.png)
 
----
 
-## 6
 
 ```mysql
 SELECT vend_name
@@ -123,11 +119,9 @@ ORDER BY vend_name;
 -- 如果要匹配反斜杠本身\，则使用“\\\”。
 ```
 
-![](images\regex7.png)
+![p10](images/p2_10.png)
 
----
 
-## 7
 
 ```mysql
 SELECT prod_name 
@@ -139,11 +133,9 @@ ORDER BY prod_name;
 -- 这意味着在正则表达式中，每当想表达普通字符时，都要使用反斜杠，所以REGEXP后出现了两次反斜杠，他们的作用都是对括号进行转义。
 ```
 
-![](images\regex8.png)
+![p11](images/p2_11.png)
 
----
 
-## 8
 
 ```mysql
 SELECT prod_name
@@ -153,11 +145,9 @@ ORDER BY prod_name;
 -- '[[:digit:]]{4}'的另一种写法是'[0-9][0-9][0-9][0-9]'
 ```
 
-![](images\regex9.png)
+![p12](images/p2_12.png)
 
----
 
-## 9
 
 ```mysql
 SELECT prod_name
@@ -167,7 +157,9 @@ ORDER BY prod_name;
 -- "^"匹配字符串的开始，也就是说[0123456789.]其中任意一个必须为字符串的开头第一个字符。
 ```
 
-![](images\regex13.png)
+![p13](images/p2_13.png)
+
+
 
 ```mysql
 SELECT prod_name
@@ -177,7 +169,7 @@ ORDER BY prod_name;
 -- "^" 有两种含义："否定集合[]。" 或是 "文本的开始。"
 ```
 
-![](images\regex14.png)
+![p14](images/p2_14.png)
 
 # END
 

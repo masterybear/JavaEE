@@ -1,14 +1,20 @@
-# MySQL安装
+# MySQL安装步骤
 
 ## step 1：下载文件
 
+---
+
 下载链接：[MySQL安装](https://dev.mysql.com/downloads/file/?id=476233%EF%BC%89)
+
+
 
 ## step 2：配置文件
 
-创建一个新的ini文件，
+---
 
-![manual](images\image1.png)
+创建一个新的ini文件。
+
+![p1](images/p1.png)
 
 内容如下：
 
@@ -48,29 +54,37 @@ Server=D:\workConfig\mysql8\bin\mysqld.exe
 #设置将mysql的服务添加到注册表中，反正我当时没加这句话初始化有问题，目录照猫画虎，单双杠自己选
 ```
 
+
+
 ## step 3：环境变量
 
-配置环境变量，
+---
 
-![step1](images\image2.png)
+配置环境变量。
 
-![step2](images\image3.png)
+![p2](images/p2.png)
+
+![p3](images/p3.png)
+
+
 
 ## step4：初始化
 
-数据库初始化
+---
 
-`@localhost`后跟着的是初始密码。
+1、数据库初始化。
 
-![](images\imageOne.png)
+> `@localhost`后跟着的是初始密码。
 
-安装完成。
+![p4](images/p4.png)
 
-![](images\imageTwo.png)
+2、安装完成。
 
-修改密码。
+![p5](images/p5.png)
 
-![](images\imageThree.png)
+3、修改密码。
 
-大功告成。
+![p6](images/p6.png)
+
+4、大功告成。
 
