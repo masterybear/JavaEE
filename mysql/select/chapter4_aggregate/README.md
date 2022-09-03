@@ -4,8 +4,6 @@
 
 ## `AVG()`函数
 
----
-
 ```mysql
 SELECT AVG(prod_price) AS avg_price
 FROM products;
@@ -29,8 +27,6 @@ WHERE vend_id = 1003;
 
 
 ## `COUNT()`函数
-
----
 
 ```mysql
 SELECT COUNT(*) AS num_cust
@@ -63,8 +59,6 @@ FROM customers;
 
 ## `MAX()`函数
 
----
-
 ```mysql
 SELECT MAX(prod_price) AS max_price
 FROM products;
@@ -79,8 +73,6 @@ FROM products;
 
 ## `MIN()`函数
 
----
-
 ```mysql
 SELECT MIN(prod_price) AS min_price
 FROM products;
@@ -94,8 +86,6 @@ FROM products;
 
 
 ## `SUM()`函数
-
----
 
 ```mysql
 SELECT SUM(quantity) AS items_ordered
@@ -122,8 +112,6 @@ WHERE order_num = 20005;
 
 ## 聚集中的DISTINCT
 
----
-
 ```mysql
 SELECT AVG(DISTINCT prod_price) AS avg_price
 FROM products
@@ -136,8 +124,6 @@ WHERE vend_id = 1003;
 
 
 ## 组合
-
----
 
 ```mysql
 SELECT COUNT(*) AS num_items,
@@ -152,8 +138,6 @@ FROM products;
 # 分组数据
 
 ## GROUP BY
-
----
 
 ```mysql
 SELECT vend_id,COUNT(*) AS num_prods
@@ -179,8 +163,6 @@ GROUP BY vend_id WITH ROLLUP;
 
 
 ## HAVING
-
----
 
 HAVING的工作是过滤分组，之前学过的WHERE是过滤数据，但因为WHERE不能过滤分组，所以使用了HAVING。但现在情况反了过来，HAVING不仅支持过滤分组，也同样拥有WHERE所具有的一切功能。
 
@@ -241,8 +223,6 @@ HAVING COUNT(*) >=2;
 
 
 ## 结合ORDER BY
-
----
 
 ```mysql
 SELECT order_num,SUM(quantity*item_price) AS ordertotal

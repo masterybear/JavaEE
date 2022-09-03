@@ -1,7 +1,5 @@
 # 计算字段
 
----
-
 数据库中的数据在面对实际需求时，往往显得过于原始，通常需要对数据进行再次加工而满足客户端的需要，但这种操作不可能在检索数据结束 以后拿到客户机进行，我们需要直接检索出我们想要的数据，这就是计算字段诞生的理由了。
 
 计算字段做什么？比方说，将企业的名字和企业的地址这两列数据在检索时拼接成一列数据。
@@ -9,8 +7,6 @@
 
 
 ## 拼接字段
-
----
 
 ```mysql
 SELECT Concat(vend_name,' (',vend_country,')')
@@ -24,8 +20,6 @@ ORDER BY vend_name;
 
 
 ## `Trim`函数
-
----
 
 - `RTrim()`去除数据右侧多余空格
 - `LTrim()`去除数据左侧多余空格
@@ -43,8 +37,6 @@ ORDER BY vend_name;
 
 ## 别名
 
----
-
 ```mysql
 SELECT Concat(RTrim(vend_name),' (',RTrim(vend_country),')') AS vend_title
 FROM vendors
@@ -58,8 +50,6 @@ ORDER BY vend_name;
 
 
 ## 算数字段
-
----
 
 ```mysql
 SELECT prod_id,
@@ -76,8 +66,6 @@ WHERE order_num = 20005;
 
 
 ## 其他
-
----
 
 还有一些有趣的计算字段和技巧
 
@@ -96,8 +84,6 @@ SELECT Now();
 
 # 数据处理函数
 
----
-
 上述的计算字段，实际上就是数据处理函数的使用，接下来介绍更多常用的数据处理函数。
 
 ```mysql
@@ -112,8 +98,6 @@ ORDER BY vend_name;
 
 
 ## 常用的文本处理函数
-
----
 
 ![p6](images/p3_6.png)
 
@@ -152,8 +136,6 @@ WHERE Soundex(cust_contact) = Soundex('Y Lie');
 
 ## 常用日期和时间处理函数
 
----
-
 ![p10](images/p3_10.png)
 
 > 无论什么时候指定一个日期，其格式都必须是：`yyyy-mm-dd`。
@@ -161,8 +143,6 @@ WHERE Soundex(cust_contact) = Soundex('Y Lie');
 
 
 ### 基础
-
----
 
 ```mysql
 SELECT * FROM orders;
@@ -182,8 +162,6 @@ WHERE order_date = '2005-09-01';
 
 
 ### 进阶1
-
----
 
 接下来进行更细致的检索，在检索前先插入一条新的数据：
 
@@ -221,8 +199,6 @@ WHERE Date(order_date) = '2022-8-28';
 
 ### 进阶2
 
----
-
 ```mysql
 SELECT cust_id, order_num
 FROM orders
@@ -236,8 +212,6 @@ WHERE Date(order_date) BETWEEN '2005-09-01' AND '2005-09-30';
 
 ### 进阶3
 
----
-
 ```mysql
 SELECT cust_id,order_num
 FROM orders
@@ -250,8 +224,6 @@ WHERE Year(order_date) = 2005 AND Month(order_date) = 9;
 
 
 ## 常用数值处理函数
-
----
 
 ![p18](images/p3_18.png)
 

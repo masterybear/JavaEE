@@ -87,29 +87,23 @@ VALUES(20009, 4, 'ANV03', 1, 14.99);
 
 INSERT INTO productnotes(note_id, prod_id, note_date, note_text)
 VALUES(101, 'TNT2', '2005-08-17',
-'Customer complaint:
-Sticks not individually wrapped, too easy to mistakenly detonate all at once.
-Recommend individual wrapping.'
+'Customer complaint: Sticks not individually wrapped, too easy to mistakenly detonate all at once. Recommend individual wrapping.'
 );
 INSERT INTO productnotes(note_id, prod_id, note_date, note_text)
 VALUES(102, 'OL1', '2005-08-18',
-'Can shipped full, refills not available.
-Need to order new can if refill needed.'
+'Can shipped full, refills not available. Need to order new can if refill needed.'
 );
 INSERT INTO productnotes(note_id, prod_id, note_date, note_text)
 VALUES(103, 'SAFE', '2005-08-18',
-'Safe is combination locked, combination not provided with safe.
-This is rarely a problem as safes are typically blown up or dropped by customers.'
+'Safe is combination locked, combination not provided with safe. This is rarely a problem as safes are typically blown up or dropped by customers.'
 );
 INSERT INTO productnotes(note_id, prod_id, note_date, note_text)
 VALUES(104, 'FC', '2005-08-19',
-'Quantity varies, sold by the sack load.
-All guaranteed to be bright and orange, and suitable for use as rabbit bait.'
+'Quantity varies, sold by the sack load. All guaranteed to be bright and orange, and suitable for use as rabbit bait.'
 );
 INSERT INTO productnotes(note_id, prod_id, note_date, note_text)
 VALUES(105, 'TNT2', '2005-08-20',
-'Included fuses are short and have been known to detonate too quickly for some customers.
-Longer fuses are available (item FU1) and should be recommended.'
+'Included fuses are short and have been known to detonate too quickly for some customers. Longer fuses are available (item FU1) and should be recommended.'
 );
 INSERT INTO productnotes(note_id, prod_id, note_date, note_text)
 VALUES(106, 'TNT2', '2005-08-22',
@@ -137,16 +131,13 @@ VALUES(111, 'SLING', '2005-09-02',
 );
 INSERT INTO productnotes(note_id, prod_id, note_date, note_text)
 VALUES(112, 'SAFE', '2005-09-02',
-'Customer complaint:
-Circular hole in safe floor can apparently be easily cut with handsaw.'
+'Customer complaint: Circular hole in safe floor can apparently be easily cut with handsaw.'
 );
 INSERT INTO productnotes(note_id, prod_id, note_date, note_text)
 VALUES(113, 'ANV01', '2005-09-05',
-'Customer complaint:
-Not heavy enough to generate flying stars around head of victim. If being purchased for dropping, recommend ANV02 or ANV03 instead.'
+'Customer complaint: Not heavy enough to generate flying stars around head of victim. If being purchased for dropping, recommend ANV02 or ANV03 instead.'
 );
 INSERT INTO productnotes(note_id, prod_id, note_date, note_text)
 VALUES(114, 'SAFE', '2005-09-07',
-'Call from individual trapped in safe plummeting to the ground, suggests an escape hatch be added.
-Comment forwarded to vendor.'
+'Call from individual trapped in safe plummeting to the ground, suggests an escape hatch be added. Comment forwarded to vendor.'
 );

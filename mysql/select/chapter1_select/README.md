@@ -1,7 +1,5 @@
 # 引言
 
----
-
 现在我们正式进入MySQL的学习，先了解一些基本语句：
 
 ```mysql
@@ -20,8 +18,6 @@ SHOW COLUMNS FROM customers;
 
 
 ## 完全限定名
-
----
 
 ```mysql
 SELECT products.prod_name FROM crashcourse.products;
@@ -42,8 +38,6 @@ SELECT prod_name FROM products;
 # 数据检索
 
 ## 基础检索
-
----
 
 一个简单的检索语句：
 
@@ -76,8 +70,6 @@ SELECT * FROM products;
 
 ## 鲜明检索
 
----
-
 ```mysql
 SELECT vend_id FROM products;
 -- 常规检索
@@ -97,8 +89,6 @@ SELECT DISTINCT vend_id FROM products;
 
 
 ## 限制检索
-
----
 
 ```mysql
 SELECT prod_name FROM products;
@@ -147,8 +137,6 @@ SELECT prod_name FROM products LIMIT 3 OFFSET 2;
 
 ## 按单列
 
----
-
 ```mysql
 SELECT prod_name FROM products ORDER BY prod_name;
 -- 取prod_name列的名字据此进行排序
@@ -169,8 +157,6 @@ SELECT prod_name FROM products ORDER BY prod_price;
 
 ## 按多列
 
----
-
 ```mysql
 SELECT prod_id,prod_price,prod_name FROM products ORDER BY prod_price,prod_name;
 -- 此种排序方式类似于对姓名进行排序，即先按姓氏、再按照名字。
@@ -181,8 +167,6 @@ SELECT prod_id,prod_price,prod_name FROM products ORDER BY prod_price,prod_name;
 
 
 ## 指定方向
-
----
 
 ```mysql
 SELECT prod_id,prod_price,prod_name FROM products ORDER BY prod_price DESC;
@@ -196,8 +180,6 @@ SELECT prod_id,prod_price,prod_name FROM products ORDER BY prod_price DESC,prod_
 ![p16](images/p1_16.png)
 
 # 过滤检索
-
----
 
 ```mysql
 SELECT prod_name,prod_price 
@@ -227,8 +209,6 @@ WHERE prod_name = 'carrots';
 
 ## BETWEEN操作符
 
----
-
 ```mysql
 SELECT prod_name,prod_price 
 FROM products 
@@ -243,8 +223,6 @@ ORDER BY prod_price;
 
 
 ## 空值检查
-
----
 
 ```mysql
 SELECT * FROM vendors;
@@ -267,8 +245,6 @@ WHERE vend_state IS NULL;
 
 ## AND操作符
 
----
-
 ```mysql
 SELECT vend_id,prod_name,prod_price 
 FROM products 
@@ -281,8 +257,6 @@ WHERE vend_id = 1003 AND prod_price <= 10;
 
 
 ## OR操作符
-
----
 
 ```mysql
 SELECT vend_id,prod_name,prod_price 
@@ -297,8 +271,6 @@ WHERE vend_id = 1002 OR vend_id = 1003;
 
 ## 计算次序
 
----
-
 ```mysql
 SELECT vend_id,prod_name,prod_price 
 FROM products 
@@ -310,8 +282,6 @@ WHERE (vend_id = 1002 OR vend_id = 1003) AND prod_price >= 10;
 
 
 ## IN操作符
-
----
 
 ```mysql
 SELECT prod_name,prod_price 
@@ -327,8 +297,6 @@ ORDER BY prod_price;
 
 ## NOT 操作符
 
----
-
 ```mysql
 SELECT prod_name,prod_price
 FROM products
@@ -342,8 +310,6 @@ ORDER BY prod_price;
 
 
 ## like通配符
-
----
 
 predicate：谓词，like其实起到的只是类似操作符的作用，like本身是predicate，通配符是下面要说的这些。
 
@@ -379,8 +345,6 @@ WHERE prod_name LIKE '_ ton anvil';
 
 # 子查询
 
----
-
 ```mysql
 SELECT cust_name,cust_contact
 FROM customers
@@ -399,8 +363,6 @@ WHERE cust_id IN(SELECT cust_id
 
 ## 相关子查询
 
----
-
 涉及外部查询的子查询。
 
 ```mysql
@@ -418,4 +380,80 @@ ORDER BY cust_name;
 ![p32](images/p1_32.png)
 
 
+
+# 组合查询
+
+## UNION
+
+将两条查询语句组合成一条查询语句。示例如下：
+
+```mysql
+SELECT vend_id, prod_id, prod_price
+FROM products
+WHERE prod_price <= 5;
+```
+
+![p33](images/p1_33.png)
+
+```mysql
+SELECT vend_id, prod_id, prod_price
+FROM products
+WHERE vend_id IN (1001,1002);
+```
+
+![p34](images/p1_34.png)
+
+现在将这两条语句进行组合，很简单，就是用一个并（`UNION`）来衔接这两条语句：
+
+```mysql
+SELECT vend_id, prod_id, prod_price
+FROM products
+WHERE prod_price <= 5
+UNION
+SELECT vend_id, prod_id, prod_price
+FROM products
+WHERE vend_id IN (1001,1002);
+```
+
+![p35](images/p1_35.png)
+
+- 要注意的是：
+- `UNION`中的每个查询必须包含相同的列、表达式或聚集函数。实际上组合查询也可以应用不同表的查询数据。
+- 列数据类型必须兼容（兼容即可，不必须相同。）
+- 如果两次查询的列数不同，SQL会报错，但如果两次查询的列不同但列数相同，SQL仍然会执行！使用的列名是最先执行的查询语句所返回的列名，后面的查询数据会后继在此列后，所以一定要注意上述的条例！
+
+---
+
+观察组合前后的查询结果，不难发现在组合查询时，查询结果从9行变成了8行，这是因为组合查询返回结果时，默认是去除重复行的，那如何显示所有的行（包括重复行）？
+
+使用`UNION ALL`即可，如下：
+
+```mysql
+SELECT vend_id, prod_id, prod_price
+FROM products
+WHERE prod_price <= 5
+UNION ALL
+SELECT vend_id, prod_id, prod_price
+FROM products
+WHERE vend_id IN (1001,1002);
+```
+
+![p36](images/p1_36.png)
+
+
+
+## 对组合查询结果进行排序
+
+```mysql
+SELECT vend_id, prod_id, prod_price
+FROM products
+WHERE prod_price <= 5
+UNION ALL
+SELECT vend_id, prod_id, prod_price
+FROM products
+WHERE vend_id IN (1001,1002)
+ORDER BY vend_id, prod_price;
+```
+
+![p37](images/p1_37.png)
 
