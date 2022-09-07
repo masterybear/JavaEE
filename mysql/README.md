@@ -1,6 +1,6 @@
 # 前言
 
-# 关系型数据库
+## 关系型数据库
 
 即创建在关系模型基础上的数据库。（Relational Database）
 
@@ -13,54 +13,20 @@
 - 每一列有着相同的数据类型。
 - 为了方便查找，每一行都对应一个主键。
 
-### 表
+## 基础知识
 
-某种特定类型数据的结构化清单。
-
-### 列
-
-`column`：表中的一个字段。
-
-### 行
-
-`row`：表中的一个记录。
-
-### 主键
-
-`primary key`：一列（或一组列），其值能够唯一区分表中的每一行。
-
-### 外键
-
-`foreign key`：它包含另一个表的主键值，定义了两个表之间的关系。
-
-### SQL
-
-结构化查询语言（Structured Query Language）的缩写。
-
-### DBMS
-
-数据库管理系统。
-
-### PRI
-
-`primary key`：主键
-
-### UNI
-
-`unique key`：唯一键
-
-### MUL
-
-> 尽管主键具有唯一性，但主键不一定只有一列组成，假如主键由`order_num`和`order_item`两列组成，单出示一列，就可以说这是其所在表的索引，不必全部出示，这种特性被称作前导列特性。
-
-- `multiple-key`：此键可不可笼统的理解为多键。此键的意思为：非唯一索引的前导列。
-- `MUL`正是关系型数据库的产物，它是与此表有关系的另一数据表的主键（留在此表中的索引）。
+- **表**：某种特定类型数据的结构化清单。
+- **列**：`column`表中的一个字段。
+- **行**：`row`表中的一个记录。
+- **主键**：`primary key`一列（或一组列），其值能够唯一区分表中的每一行。
+- **外键**：`foreign key`它包含另一个表的主键值，定义了两个表之间的关系。
+- **SQL**：结构化查询语言（Structured Query Language）的缩写。
+- **DBMS**：数据库管理系统。
+- **PRI**：`primary key`主键。
+- **UNI**：`unique key`唯一键。
+- **MUL**：`multiple-key`此键可不可笼统的理解为多键。此键的意思为：非唯一索引的前导列。`MUL`正是关系型数据库的产物，它是与此表有关系的另一数据表的主键（留在此表中的索引）。
 - **非唯一索引**：此列的数据作为索引且此数据不具有唯一性。
-- **前导列**：前导列特性，即触类旁通的特性。
-
-
-
----
+- **前导列**：例如创建复合索引（name，salary，dept），就相当于创建了（name，salary，dept）、（name，salary）和 （name） 三个索引，这被称为复合索引前导列特性。
 
 # 引言
 
@@ -79,8 +45,6 @@ SHOW COLUMNS FROM customers;
 -- 返回‘customers’表中所有列名的列表
 ```
 
-
-
 ## 完全限定名
 
 ```mysql
@@ -90,16 +54,7 @@ SELECT products.prod_name FROM crashcourse.products;
 
 ![p1](images/1.png)
 
-
-
-```mysql
-SELECT prod_name FROM products;
--- 常规检索
-```
-
-![p2](images/2.png)
-
-# 数据检索
+# SELECT
 
 ## 基础检索
 
@@ -110,9 +65,7 @@ SELECT prod_name FROM products;
 -- 检索单个列
 ```
 
-![p3](images/3.png)
-
-
+![p2](images/2.png)
 
 ```mysql
 SELECT prod_id,vend_id,prod_name FROM products;
@@ -121,8 +74,6 @@ SELECT prod_id,vend_id,prod_name FROM products;
 
 ![p4](images/4.png)
 
-
-
 ```mysql
 SELECT * FROM products;
 -- 检索所有列
@@ -130,18 +81,9 @@ SELECT * FROM products;
 
 ![p5](images/5.png)
 
+## DISTINCT
 
-
-## 鲜明检索
-
-```mysql
-SELECT vend_id FROM products;
--- 常规检索
-```
-
-![p6](images/6.png)
-
-检索时，在某些情况下得到的原始数据会有重复的情况，下面的语句可以让每个数据仅出现一次，使检索到的数据都是不同的。
+**鲜明检索**：消除检索结果中重复出现的数据。
 
 ```mysql
 SELECT DISTINCT vend_id FROM products;
@@ -150,18 +92,9 @@ SELECT DISTINCT vend_id FROM products;
 
 ![p7](images/7.png)
 
+## LIMIT_OFFSET
 
-
-## 限制检索
-
-```mysql
-SELECT prod_name FROM products;
--- 常规检索
-```
-
-![p3](images/3.png)
-
-
+**限制检索**：限制返回数据的行数。
 
 ```mysql
 SELECT prod_name FROM products LIMIT 5;
@@ -170,8 +103,6 @@ SELECT prod_name FROM products LIMIT 5;
 
 ![p8](images/8.png)
 
-
-
 ```mysql
 SELECT prod_name FROM products LIMIT 5,5;
 -- 从行5开始检索，检索的数据不得超过5行。
@@ -179,8 +110,6 @@ SELECT prod_name FROM products LIMIT 5,5;
 ```
 
 ![p9](images/9.png)
-
-
 
 ```mysql
 SELECT prod_name FROM products LIMIT 2,3;
@@ -197,9 +126,9 @@ SELECT prod_name FROM products LIMIT 3 OFFSET 2;
 
 ![p11](images/11.png)
 
-# 排序检索
+## ORDER BY
 
-## 按单列
+**排序检索**：对检索的数据进行排序。
 
 ```mysql
 SELECT prod_name FROM products ORDER BY prod_name;
@@ -208,18 +137,14 @@ SELECT prod_name FROM products ORDER BY prod_name;
 
 ![p12](images/12.png)
 
-
-
 ```mysql
 SELECT prod_name FROM products ORDER BY prod_price;
--- 取其他列的名字据此进行排序也是合法的，但顺序就不尽如人意了
+-- 取其他列的名字据此进行排序也是合法的，但顺序就不尽如人意了。
 ```
 
 ![p13](images/13.png)
 
-
-
-## 按多列
+对多列数据进行排序，次列排序时不能破坏前列的顺序。
 
 ```mysql
 SELECT prod_id,prod_price,prod_name FROM products ORDER BY prod_price,prod_name;
@@ -228,9 +153,7 @@ SELECT prod_id,prod_price,prod_name FROM products ORDER BY prod_price,prod_name;
 
 ![p14](images/14.png)
 
-
-
-## 指定方向
+## DESC
 
 ```mysql
 SELECT prod_id,prod_price,prod_name FROM products ORDER BY prod_price DESC;
@@ -243,7 +166,9 @@ SELECT prod_id,prod_price,prod_name FROM products ORDER BY prod_price DESC,prod_
 
 ![p16](images/16.png)
 
-# 过滤检索
+## WHERE
+
+**过滤检索**：为语句添加过滤条件。
 
 ```mysql
 SELECT prod_name,prod_price 
@@ -264,29 +189,29 @@ WHERE prod_price = 2.50;
 SELECT prod_name,prod_price 
 FROM products 
 WHERE prod_name = 'carrots';
--- 不区分大小写
+-- 指定的数据不区分大小写。
 ```
 
 ![p19](images/19.png)
 
+# 操作符
 
+## BETWEEN
 
-## BETWEEN操作符
+`between`后接着起始值，`and`后接着结束值，意为介于两者之间。
 
 ```mysql
 SELECT prod_name,prod_price 
 FROM products 
 WHERE prod_price BETWEEN 2.50 AND 10.00 
 ORDER BY prod_price;
--- 介于价格在2.50到10.00之间的数据
--- between后接着起始值，and后接着结束值
 ```
 
 ![p20](images/20.png)
 
+## NULL
 
-
-## 空值检查
+空值检查。
 
 ```mysql
 SELECT * FROM vendors;
@@ -294,20 +219,19 @@ SELECT * FROM vendors;
 
 ![p21](images/21.png)
 
-
+条件：vend_state值为空。
 
 ```mysql
 SELECT vend_name,vend_state 
 FROM vendors 
 WHERE vend_state IS NULL;
--- 条件：vend_state值为空
 ```
 
 ![p22](images/22.png)
 
+## AND
 
-
-## AND操作符
+"且"。
 
 ```mysql
 SELECT vend_id,prod_name,prod_price 
@@ -318,9 +242,9 @@ WHERE vend_id = 1003 AND prod_price <= 10;
 
 ![p23](images/23.png)
 
+## OR
 
-
-## OR操作符
+"或"。
 
 ```mysql
 SELECT vend_id,prod_name,prod_price 
@@ -331,9 +255,7 @@ WHERE vend_id = 1002 OR vend_id = 1003;
 
 ![p24](images/24.png)
 
-
-
-## 计算次序
+**计算次序**
 
 ```mysql
 SELECT vend_id,prod_name,prod_price 
@@ -343,50 +265,48 @@ WHERE (vend_id = 1002 OR vend_id = 1003) AND prod_price >= 10;
 
 ![p25](images/25.png)
 
+## IN
 
-
-## IN操作符
+对`OR`的统筹，免得使用过多的`OR`操作符引起不必要的混乱。
 
 ```mysql
 SELECT prod_name,prod_price 
 FROM products 
 WHERE vend_id IN (1002,1003) 
 ORDER BY prod_price;
--- 免得使用过多的OR操作符引起不必要的混乱
 ```
 
 ![p26](images/26.png)
 
+## NOT
 
-
-## NOT 操作符
+起否定意义。
 
 ```mysql
 SELECT prod_name,prod_price
 FROM products
 WHERE vend_id NOT IN (1002,1003)
 ORDER BY prod_price;
--- 起否定意义
 ```
 
 ![p27](images/27.png)
 
+## like
 
+**通配符**：
 
-## like通配符
-
-predicate：谓词，like其实起到的只是类似操作符的作用，like本身是predicate，通配符是下面要说的这些。
+- `predicate`：谓词。like其实起到的只是类似操作符的作用，实际上是谓词，它指明此句使用通配符，类似`where`的作用。
+- 通配符是like后的特殊符号。
+- `% `代表任意字符出现任意次数。
+- `_`代表单个字符。
 
 ```mysql
 SELECT prod_name,prod_id,prod_price
 FROM products
 WHERE prod_name LIKE 'jet%';
--- % 表示任意字符出现任意次数。
 ```
 
 ![p28](images/28.png)
-
-
 
 ```mysql
 SELECT prod_name,prod_id,prod_price
@@ -396,18 +316,17 @@ WHERE prod_name LIKE '%anvil%';
 
 ![p29](images/29.png)
 
-
-
 ```mysql
 SELECT prod_name,prod_id,prod_price
 FROM products
 WHERE prod_name LIKE '_ ton anvil';
--- _ 通配符表示单个字符。
 ```
 
 ![p30](images/30.png)
 
 # 子查询
+
+实际上子查询很简单，之前的查询语句都是单独的SQL语句，而子查询就是使用另一个语句所查询的数据，使用起来就是将那条语句放在对应的位置。
 
 ```mysql
 SELECT cust_name,cust_contact
@@ -417,17 +336,15 @@ WHERE cust_id IN(SELECT cust_id
                 WHERE order_num IN(SELECT order_num
                                   FROM orderitems
                                   WHERE prod_id = 'TNT2'));
--- 子查询很简单，
--- 之前的查询语句都是单独的SQL语句，而子查询就是使用另一个语句所查询的数据，使用起来就是将那条语句放在对应的位置。
 ```
 
 ![p31](images/31.png)
 
-
-
 ## 相关子查询
 
-涉及外部查询的子查询。
+- 即子查询涉及外部查询。
+-  需要注意的是，完成相关子查询时，要书写全限定名。
+- 如果不使用全限定名那么它将不会涉及外部查询，无法得到我们希望的数据。
 
 ```mysql
 SELECT cust_name,
@@ -437,19 +354,13 @@ SELECT cust_name,
         WHERE orders.cust_id = customers.cust_id) AS orders
 FROM customers
 ORDER BY cust_name;
--- 需要注意的是，完成相关子查询时，要书写全限定名。
--- 如果不使用全限定名那么它将不会涉及外部查询，无法得到我们希望的数据。
 ```
 
 ![p32](images/32.png)
 
-
-
-# 组合查询
-
 ## UNION
 
-将两条查询语句组合成一条查询语句。示例如下：
+**组合查询**：将两条查询语句组合成一条查询语句。示例如下：
 
 ```mysql
 SELECT vend_id, prod_id, prod_price
@@ -504,9 +415,9 @@ WHERE vend_id IN (1001,1002);
 
 ![p36](images/36.png)
 
+---
 
-
-## 对组合查询结果进行排序
+对组合查询结果进行排序也很简单。
 
 ```mysql
 SELECT vend_id, prod_id, prod_price
@@ -521,44 +432,32 @@ ORDER BY vend_id, prod_price;
 
 ![p37](images/37.png)
 
----
-
-> 本文档归属于`select`文档，因正则表达式的特殊性，所以将其作为分文档进行了解。
->
-> 正则表达式本身是一个非常庞大的知识概念，MySQL中的正则表达式仅仅是其的一个子集。
-
 # 正则表达式
 
-​	正则表达式是用来匹配文本的特殊字符集合。
-
-
+- 正则表达式本身是一个非常庞大的知识概念，MySQL中的正则表达式仅仅是其的一个子集。
+- 正则表达式是用来匹配文本的特殊字符集合。
 
 ## 字符类
 
 ![p38](images/38.png)
 
-
-
 ## 重复元字符
 
 ![p39](images/39.png)
-
-
 
 ## 定位元字符
 
 ![p40](images/40.png)
 
+## REGEXP
 
-
-## REGEXP关键字
+`REGEXP`就像`like`，只不过`like`是MySQL的自定语义，而`REGEXP`则表示正则表达式的引用。
 
 ```mysql
 SELECT prod_name
 FROM products
 WHERE prod_name REGEXP '1000'
 ORDER BY prod_name;
--- REGEXP就像like，只不过like是MySQL的自定语义，而REGEXP则表示正则表达式的引用。
 -- 很明显，'1000'就是一个正则表达式。
 ```
 
@@ -571,11 +470,10 @@ SELECT prod_name
 FROM products
 WHERE prod_name REGEXP '.000'
 ORDER BY prod_name;
+-- 	匹配除“\r”“\n”之外的任何单个字符。
 ```
 
 ![p42](images/42.png)
-
-
 
 ```mysql
 SELECT prod_name
@@ -587,8 +485,6 @@ ORDER BY prod_name;
 
 ![p43](images/43.png)
 
-
-
 ```mysql
 SELECT prod_name
 FROM products
@@ -598,8 +494,6 @@ ORDER BY prod_name;
 ```
 
 ![p44](images/44.png)
-
-
 
 ```mysql
 SELECT prod_name
@@ -611,8 +505,6 @@ ORDER BY prod_name;
 
 ![p45](images/45.png)
 
-
-
 ```mysql
 SELECT prod_name
 FROM products
@@ -622,8 +514,6 @@ ORDER BY prod_name;
 ```
 
 ![p46](images/46.png)
-
-
 
 ```mysql
 SELECT vend_name
@@ -635,8 +525,6 @@ ORDER BY vend_name;
 ```
 
 ![p47](images/47.png)
-
-
 
 ```mysql
 SELECT prod_name 
@@ -650,8 +538,6 @@ ORDER BY prod_name;
 
 ![p48](images/48.png)
 
-
-
 ```mysql
 SELECT prod_name
 FROM products
@@ -661,8 +547,6 @@ ORDER BY prod_name;
 ```
 
 ![p49](images/49.png)
-
-
 
 ```mysql
 SELECT prod_name
@@ -674,8 +558,6 @@ ORDER BY prod_name;
 
 ![p50](images/50.png)
 
-
-
 ```mysql
 SELECT prod_name
 FROM products
@@ -686,7 +568,7 @@ ORDER BY prod_name;
 
 ![p51](images/51.png)
 
-# END
+## info
 
 正则表达式不依赖数据库中的表，REGEXP检查的结果只有两个：
 
@@ -698,33 +580,26 @@ ORDER BY prod_name;
 
 ```mysql
 SELECT 'hello' REGEXP '[0-9]';
--- hello字符串中当然没有数字，显然返回的是0.
+-- hello字符串中当然没有数字，显然返回的将是0
 ```
-
----
 
 # 计算字段
 
-数据库中的数据在面对实际需求时，往往显得过于原始，通常需要对数据进行再次加工而满足客户端的需要，但这种操作不可能在检索数据结束 以后拿到客户机进行，我们需要直接检索出我们想要的数据，这就是计算字段诞生的理由了。
+数据库中的数据在面对实际需求时，往往显得过于原始，通常需要对数据进行再次加工而满足客户端的需要，但这种操作不可能在检索数据结束以后拿到客户机进行，因此我们必须直接检索出我们想要的数据，计算字段可以很好的帮助我们完成这项工作。
 
-计算字段做什么？比方说，将企业的名字和企业的地址这两列数据在检索时拼接成一列数据。
+## Concat
 
-
-
-## 拼接字段
+**拼接字段**：将数据拼接在一块儿，比如下面的例子：
 
 ```mysql
 SELECT Concat(vend_name,' (',vend_country,')')
 FROM vendors
 ORDER BY vend_name;
--- Concat()函数的作用相当于Java语言中的"+".
 ```
 
 ![p52](images/52.png)
 
-
-
-## `Trim`函数
+## Trim
 
 - `RTrim()`去除数据右侧多余空格
 - `LTrim()`去除数据左侧多余空格
@@ -738,23 +613,22 @@ ORDER BY vend_name;
 
 ![p53](images/53.png)
 
+## AS
 
-
-## 别名
+- 使用AS关键字进行别名的命名。
+- 别名有时也被称作"导出列"。
 
 ```mysql
 SELECT Concat(RTrim(vend_name),' (',RTrim(vend_country),')') AS vend_title
 FROM vendors
 ORDER BY vend_name;
--- 使用AS关键字进行别名的命名。
--- 别名有时也被称作"导出列"。
 ```
 
 ![p54](images/54.png)
 
-
-
 ## 算数字段
+
+即对列进行`+ - * /`加减乘除运算。
 
 ```mysql
 SELECT prod_id,
@@ -768,11 +642,9 @@ WHERE order_num = 20005;
 
 ![p55](images/55.png)
 
+## info
 
-
-## 其他
-
-还有一些有趣的计算字段和技巧
+还有一些有趣的计算字段和技巧：
 
 ```mysql
 SELECT 8*8;
@@ -799,8 +671,6 @@ ORDER BY vend_name;
 ```
 
 ![p56](images/56.png)
-
-
 
 ## 常用的文本处理函数
 
@@ -837,15 +707,15 @@ WHERE Soundex(cust_contact) = Soundex('Y Lie');
 
 ![p60](images/60.png)
 
+## 常用数值处理函数
 
+![p69](images/69.png)
 
 ## 常用日期和时间处理函数
 
 ![p61](images/61.png)
 
 > 无论什么时候指定一个日期，其格式都必须是：`yyyy-mm-dd`。
-
-
 
 ### 基础
 
@@ -863,8 +733,6 @@ WHERE order_date = '2005-09-01';
 ```
 
 ![p63](images/63.png)
-
-
 
 ### 进阶1
 
@@ -900,8 +768,6 @@ WHERE Date(order_date) = '2022-8-28';
 
 ![p66](images/66.png)
 
-
-
 ### 进阶2
 
 ```mysql
@@ -912,8 +778,6 @@ WHERE Date(order_date) BETWEEN '2005-09-01' AND '2005-09-30';
 ```
 
 ![p67](images/67.png)
-
-
 
 ### 进阶3
 
@@ -926,29 +790,20 @@ WHERE Year(order_date) = 2005 AND Month(order_date) = 9;
 
 ![p68](images/68.png)
 
-
-
-## 常用数值处理函数
-
-![p69](images/69.png)
-
----
-
 # 聚集函数
 
 聚集函数的主要作用就是对数据进行汇总，在进行数据汇总工作时，聚集函数在提高性能方面有很好的效果。
 
-## `AVG()`函数
+## AVG
+
+返回特定列的平均值。
 
 ```mysql
 SELECT AVG(prod_price) AS avg_price
 FROM products;
--- 返回特定列的平均值。
 ```
 
 ![p70](images/70.png)
-
-
 
 ```mysql
 SELECT AVG(prod_price) AS avg_price
@@ -960,27 +815,22 @@ WHERE vend_id = 1003;
 
 ![p71](images/71.png)
 
+## COUNT
 
-
-## `COUNT()`函数
+COUNT()函数的作用是计数（统计），例如对整个表中行数目进行统计。
 
 ```mysql
 SELECT COUNT(*) AS num_cust
 FROM customers;
--- COUNT()函数的作用是计数（统计），例如对整个表中行数目进行统计。
 ```
 
 ![p72](images/72.png)
-
-
 
 ```mysql
 SELECT * FROM customers;
 ```
 
 ![p73](images/73.png)
-
-
 
 ```mysql
 SELECT COUNT(cust_email) AS num_cust
@@ -991,49 +841,44 @@ FROM customers;
 
 ![p74](images/74.png)
 
+## MAX
 
-
-## `MAX()`函数
+返回指定列中的最大值。要求指定列名。
 
 ```mysql
 SELECT MAX(prod_price) AS max_price
 FROM products;
--- 返回指定列中的最大值。要求指定列名。
 -- 对于文本，将返回最后面的行。
 -- 忽略NULL.
 ```
 
 ![p75](images/75.png)
 
+## MIN
 
-
-## `MIN()`函数
+返回指定列中的最小值。要求指定列名。
 
 ```mysql
 SELECT MIN(prod_price) AS min_price
 FROM products;
--- 返回指定列中的最小值。要求指定列名。
 -- 对于文本，将返回最前面的行。
 -- 忽略NULL.
 ```
 
 ![p76](images/76.png)
 
+## SUM
 
-
-## `SUM()`函数
+求和：特定列值的和（总计）。
 
 ```mysql
 SELECT SUM(quantity) AS items_ordered
 FROM orderitems
 WHERE order_num = 20005;
--- 特定列值的和（总计）。
 -- 忽略NULL.
 ```
 
 ![p77](images/77.png)
-
-
 
 ```mysql
 SELECT SUM(item_price*quantity) AS total_price
@@ -1043,8 +888,6 @@ WHERE order_num = 20005;
 ```
 
 ![p78](images/78.png)
-
-
 
 ## 聚集中的DISTINCT
 
@@ -1056,8 +899,6 @@ WHERE vend_id = 1003;
 ```
 
 ![p79](images/79.png)
-
-
 
 ## 组合
 
@@ -1073,10 +914,12 @@ FROM products;
 
 # 分组数据
 
+为使用函数返回的数据组建一个单独的组。
+
 ## GROUP BY
 
 ```mysql
-SELECT vend_id,COUNT(*) AS num_prods
+SELECT vend_id, COUNT(*) AS num_prods
 FROM products
 GROUP BY vend_id;
 -- 分组后，COUNT()会对分组的数据进行分组统计。
@@ -1084,23 +927,23 @@ GROUP BY vend_id;
 
 ![p81](images/81.png)
 
+## WITH ROLLUP
 
+使返回的分组数据中——带汇总行（总计行）。
 
 ```mysql
 SELECT vend_id,COUNT(*) AS num_prods
 FROM products
 GROUP BY vend_id WITH ROLLUP;
--- 分组的汇总，由于并未对分组的汇总指定vend_id，所以为null。
--- 计算字段（数据处理函数）的工作属于是对检索数据的再整理，并不影响元数据，所以即便是主键也可以使用WITH ROLLUP进行分组汇总。
+-- 分组的汇总，由于并未对分组的汇总指定对应的vend_id，所以为null。实际上null应为合计。
 ```
 
 ![p82](images/82.png)
 
-
-
 ## HAVING
 
-HAVING的工作是过滤分组，之前学过的WHERE是过滤数据，但因为WHERE不能过滤分组，所以使用了HAVING。但现在情况反了过来，HAVING不仅支持过滤分组，也同样拥有WHERE所具有的一切功能。
+- HAVING的工作是过滤分组，之前学过的WHERE是过滤数据，但因为WHERE不能过滤分组，所以使用了HAVING。
+- HAVING不仅支持过滤分组，也同样拥有WHERE所具有的一切功能。
 
 ```mysql
 SELECT * FROM products WHERE vend_id = 1003;
@@ -1114,7 +957,8 @@ SELECT * FROM products HAVING vend_id = 1003;
 
 ![p84](images/84.png)
 
-显然，WHERE能做的，HAVING也能做。不同的是WHERE过滤的是分组前的数据，而HAVING过滤的是分组后的数据。
+- 显然，WHERE能做的，HAVING也能做。
+- 不同的是WHERE过滤的是分组前的数据，而HAVING过滤的是分组后的数据。
 
 ```mysql
 SELECT cust_id,COUNT(*) AS orders
@@ -1134,7 +978,7 @@ SELECT * FROM products WHERE vend_id = 1003 HAVING prod_id = 'FB';
 
 ![p86](images/86.png)
 
-下面的写法更加标准。
+更多例子：
 
 ```mysql
 SELECT vend_id,COUNT(*) AS num_prods
@@ -1156,8 +1000,6 @@ HAVING COUNT(*) >=2;
 
 ![p88](images/88.png)
 
-
-
 ## 结合ORDER BY
 
 ```mysql
@@ -1170,21 +1012,12 @@ ORDER BY ordertotal;
 
 ![p89](images/89.png)
 
----
-
 # 联结
 
-联结是一种机制，用来在一条`SELECT`语句中关联表，因此称之为联结。
+- 联结是一种机制，用来在一条`SELECT`语句中关联表。
+- 当然，联结不会修改真正的表。
 
-由于数据冗余会降低数据库的性能，所以良好的数据库都会尽量避免数据冗余来换取更好可伸缩性。作为存储方来说，这样的数据库是优秀的，但作为提取方，在数据检索时，这种设计思想却成为了数据检索的问题，就是如何更轻量化的完成数据的精细检索？联结就是这个问题的解决方案，既然数据在存储时被分散了，那么就在提取时重新联结成整体从而方便接下来工作的进行。
-
-
-
-## 联结的特性
-
-联结与之前的数据处理函数的生命周期类似，都是在查询时开始，查询完成后结束，不会修改真正的数据表，更不是真正的数据表，而仅仅是这个过程中的一种临时产物。
-
-
+由于数据冗余会降低数据库的性能，所以良好的数据库都会尽量避免数据冗余来换取更好可伸缩性。作为存储方来说，这样的数据库是优秀的，但作为提取方，在数据检索时，这种设计思想却成为了数据检索的问题，即：如何更轻量化的完成数据的精细检索？联结就是这个问题的解决方案，既然数据在存储时被分散了，那么就在提取时重新联结成整体从而方便检索工作的进行。
 
 ## 创建联结
 
@@ -1203,11 +1036,12 @@ ORDER BY vend_name,prod_name;
 
 ![p95](images/95.png)
 
-
-
 ## 笛卡尔积
 
 如果不使用where字句建立联结，那么返回的结果将是笛卡尔积。
+
+- 笛卡尔积也被称为叉联结`cross join`。
+- 两个集合的笛卡尔积，即两个集合的直积（A×B）。是所有可能有序对组成的集合。
 
 ```mysql
 SELECT vend_name,prod_name,prod_price
@@ -1219,18 +1053,16 @@ ORDER BY vend_name,prod_name;
 
 ![p91](images/91.png)
 
-- 笛卡尔积也被称为叉联结`cross join`。
-- 两个集合的笛卡尔积，即两个集合的直积（A×B）。是所有可能有序对组成的集合。
-
 所以在联结时一定不要忘了where字句。
 
+## INNER JOIN
 
-
-## 内部联结
+**内部联结**
 
 - 内部联结也称等值联结（equijoin），因为这种联结方式基于的是两个表中特定列的相等测试。
 - INNER JOIN——ON。
 - 使用规范的联结关键字，尽管where字句可以完成联结，但where字句可以进行的工作不仅只有联结，所以应该使用更规范的方式去完成联结，如下。
+- 此语句的效果与上一个例子完全相同，尽管where语句完成定义更为简单，但这种方式更加规范。
 
 ```mysql
 SELECT vend_name,prod_name,prod_price
@@ -1242,10 +1074,6 @@ ORDER BY vend_name,prod_name;
 ![p92](images/92.png)
 
 ![p95](images/95.png)
-
-此语句的效果与上一个例子完全相同，尽管where语句完成定义更为简单，但这种方式更加规范。
-
-
 
 ## 多表联结
 
@@ -1275,9 +1103,7 @@ ON products.vend_id = vendors.vend_id
 
 ![p98](images/98.png)
 
-
-
-# 子查询与联结
+## 子查询与联结
 
 在接触了子查询和连接后，不难发现，这两种机制其实可以进行相同的查询工作，差别在于二者的性能消耗。现在看下面这个例子：
 
@@ -1317,29 +1143,6 @@ ON customers.cust_id = orders.cust_id
 
 ![p100](images/100.png)
 
----
-
-# 联结
-
-## 内部联结
-
-- 内部联结也称等值联结（equijoin），因为这种联结方式基于的是两个表中特定列的相等测试。
-- INNER JOIN——ON。
-- 使用规范的联结关键字，尽管where字句可以完成联结，但where字句可以进行的工作不仅只有联结，所以应该使用更规范的方式去完成联结，如下。
-
-```mysql
-SELECT vend_name,prod_name,prod_price
-FROM vendors INNER JOIN products
-ON vendors.vend_id = products.vend_id
-ORDER BY vend_name,prod_name;
-```
-
-![p92](images/92.png)
-
-![p95](images/95.png)
-
-此语句的效果与上一个例子完全相同，尽管where语句完成定义更为简单，但这种方式更加规范。
-
 # 高级联结
 
 ## 表别名
@@ -1355,8 +1158,6 @@ WHERE c.cust_id = o.cust_id
 ![p101](images/101.png)
 
 与列别名不同的是，表别名仅存在于查询执行过程中，而不像列别名那样，可以出现在返回的查询结果中。
-
-
 
 ## 自联结
 
@@ -1393,8 +1194,6 @@ ON p1.vend_id = p2.vend_id
 
 ![p104](images/104.png)
 
-
-
 ## 自然联结
 
 什么是自然联结？
@@ -1414,9 +1213,9 @@ WHERE c.cust_id = o.cust_id
 
 ![p106](images/106.png)
 
+## LEFT/RIGHT OUTER JOIN
 
-
-## 外部联结
+**外部联结**
 
 许多联结将一个表中的行与另一个表中的行相关联。但有时候会需要包含没有关联行的那些行。
 
@@ -1447,8 +1246,6 @@ ON customers.cust_id = orders.cust_id;
 
 ![p109](images/109.png)
 
----
-
 # 全文本搜索
 
 并非所有的引擎都支持全文本搜索。如常用的两个引擎`MyISAM`、`InnoDB`中，`InnoDB`就不支持全文本搜索，这一点需要注意！
@@ -1471,7 +1268,9 @@ FULLTEXT(note_text)
 
 子句`FULLTEXT()`指示对其中参数进行索引，它给出被索引列。
 
-## 进行全文本搜索
+## Match、Against
+
+**进行全文本搜索**
 
 在索引之后，使用两个函数`Match()`和`Against()`执行全文本搜索，其中`Match()`指定被搜索的列，`Against()`指定要使用的搜索表达式。
 
@@ -1504,9 +1303,9 @@ FROM productnotes;
 - 整个索引中的词总数
 - 以及包含该词的行的数目_计算出来。
 
+## WITH QUERY
 
-
-## 使用查询扩展
+**使用查询扩展**
 
 使用查询扩展，即让搜索变得更具包容性（宽松性）。
 
@@ -1530,17 +1329,18 @@ WHERE Match(note_text) Against('anvils' WITH QUERY EXPANSION);
 
 多出来的行虽然与给定检索信息无关，但是却与已被精准检索的语句有关，这就是查询扩展，它放宽了检索的条件，使我们更容易找到我们真正需要的信息。
 
+## BOOLEAN MODE
 
+**布尔文本搜索**
 
-## 布尔文本搜索
-
-即使没有`FULLTEXT`索引，布尔文本搜索仍然可用，自然，如果没有索引，性能会变低。
+- 不同于之前，即使没有`FULLTEXT`索引，布尔文本搜索仍然可用，因为其本身的特质就类似于通配符。
+- 相应的，没有索引，查询速度会变慢。
 
 返回的结果，“ 排列而不排序 ”。
 
 ![p116](images/116.png)
 
-下面的例子就算不使用布尔文本搜索，结果也是相同的。
+下面的这个例子就算不使用布尔文本搜索，结果也是相同的。
 
 ```mysql
 SELECT note_text
@@ -1560,21 +1360,18 @@ WHERE Match(note_text) Against('heavy -rope*' IN BOOLEAN MODE);
 
 ![p115](images/115.png)
 
----
+# VIEW
 
-# 视图
+**视图**
 
-`CREATE VIEW`：创建视图。
+- `CREATE VIEW`：创建视图。
+- `SHOW CREATE VIEW viewname`：查看创建视图的语句。
+- `DROP VIEW viewname`：删除视图。
+- `先DROP再CREATE` 或是 `CREATE OR REPLACE VIEW`：更新视图（无论哪种方式，都是先删再建）。
+- 如果说表是对散乱数据的整理，那么视图就是对散乱`SELECT`语句的整理。理论上来说，可以将所有`SELECT`语句保存为视图。
+- 视图创建的是虚拟的表，只是起到了方便查询的工作，仅此而已！
 
-`SHOW CREATE VIEW viewname`：查看创建视图的语句。
-
-`DROP VIEW viewname`：删除视图。
-
-`先DROP再CREATE` 或是 `CREATE OR REPLACE VIEW`：更新视图（无论哪种方式，都是先删再建）。
-
-如果说表是对散乱数据的整理，那么视图就是对散乱`SELECT`语句的整理。理论上来说，可以将所有`SELECT`语句保存为视图。
-
-# 应用视图
+## **应用视图**
 
 - 要知道，视图是对`SELECT`语句的查询结果的操纵，而不是真正的表，且创建出来的视图也不是真正的表。
 - 视图就是对查询结果的二次规划，对SQL的重用，对数据的保护，对语句的简化。
@@ -1604,8 +1401,6 @@ WHERE prod_id = 'TNT2';
 ```
 
 ![p117](images/117.png)
-
-
 
 ## 保存检索数据
 
@@ -1688,11 +1483,11 @@ WHERE order_num = 20005;
 
 ![p123](images/123.png)
 
----
+# INSERT
 
-# 插入数据
+## 插入数据
 
-## 插入完整的行
+插入完整的行：
 
 ```mysql
 INSERT INTO customers
@@ -1832,10 +1627,6 @@ INSERT INTO customers(cust_id,
 - 如果被检索的数据中，主键列的数据与已有的数据不发生冲突，便可像上面这样进行插入。如果数据发生冲突（即有相同数据）则可以省略插入这列（同时在INSERT和SELECT）。
 - 另外，SELECT部分的列名无需与INSERT部分的列名相同，插入是按照给出的列的顺序进行插入的，SELECT部分的列名仅是为了检索出表`custnew`中对应列的数据。
 
----
-
-# 操纵表
-
 # CREATE TABLE
 
 ## 创建表
@@ -1938,8 +1729,6 @@ ALTER TABLE products ADD CONSTRAINT fk_products_vendors FOREIGN KEY (vend_id) RE
 - 对该表添加约束，`fk`是`foreign key`的缩写，将`orderitems`与`orders`进行约束关联。
 - 定义外键为`order_num`，参照`orders`表的同名列进行取值。
 
-
-
 ## 删除表
 
 ```mysql
@@ -1961,13 +1750,7 @@ RENAME TABLE backup_customers TO customers,
 			backup_products TO products;
 ```
 
----
-
-# 更新表中数据
-
-> 更新与删除
-
-# UPDATE语句
+# UPDATE
 
 ## 更新单个列
 
@@ -1988,6 +1771,8 @@ SET cust_name = 'The Fudds',
 WHERE cust_id = 10005;
 ```
 
+## IGNORE
+
 在更新数据的整个过程中，即使已经完成了一部分数据的更新操作，但只要发生一项错误，那么就会将所有数据（包括已更新）全部恢复为执行之前的状态。如果有需要，可以保留已更新成功的数据，那么需要使用关键字`IGNORE`。
 
 ```mysql
@@ -1995,8 +1780,6 @@ UPDATE IGNORE customers
 SET ...... 
 WHERE cust_id = 10005;
 ```
-
-
 
 # DELETE语句
 
@@ -2020,8 +1803,6 @@ WHERE cust_id = 10006;
 # info
 
 无论是`UPDATE`语句还是`DELETE`语句，如果不添加`where`字句，就会对整个表进行操作！
-
----
 
 # 存储过程
 
