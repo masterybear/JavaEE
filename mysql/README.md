@@ -1729,7 +1729,9 @@ ALTER TABLE products ADD CONSTRAINT fk_products_vendors FOREIGN KEY (vend_id) RE
 - 对该表添加约束，`fk`是`foreign key`的缩写，将`orderitems`与`orders`进行约束关联。
 - 定义外键为`order_num`，参照`orders`表的同名列进行取值。
 
-## 删除表
+## DROP TABLE
+
+删除表：
 
 ```mysql
 DROP TABLE customers2;
@@ -1737,7 +1739,9 @@ DROP TABLE customers2;
 
 这样就删除了整个表，而非表的内容。
 
-## 重命名表
+## RENAME TABLE
+
+重命名表：
 
 ```mysql
 RENAME TABLE customers2 TO customers;
@@ -1781,7 +1785,7 @@ SET ......
 WHERE cust_id = 10005;
 ```
 
-# DELETE语句
+# DELETE
 
 ## 删除单行
 
@@ -1800,7 +1804,7 @@ WHERE cust_id = 10006;
 
 - 就像刚才说到的，删除所有行，这只能删除表中的数据，而不是删除表！`TRUNCATE TABLE`比`DELETE`拥有更快的删除速度的原因是其先删除了整个表，又重新创建了这个表，无论是二者的哪一个，都不能真正意义上的删除表。
 
-# info
+## info
 
 无论是`UPDATE`语句还是`DELETE`语句，如果不添加`where`字句，就会对整个表进行操作！
 
@@ -1809,3 +1813,278 @@ WHERE cust_id = 10006;
 我们知道，在`java`中，一个方法往往包含着几十条甚至上百条的语句，然而在调用时，我们只需要提供方法名即可，可以说，方法使得程序执行变得更加简洁、安全、易用。
 
 而在MySQL的实际应用中，进行一项工作，往往也需要着相当多的SQL语句，而存储过程，就像`java`中的方法一样，对这些语句进行了封装，从而提高了工作的效率。
+
+## CALL
+
+**执行存储过程**
+
+- `CALL`接受存储过程的名字以及需要传递给他的任意参数。
+- 执行过程被称为`CALL`调用。
+
+```mysql
+CALL productpricing(@pricelow,
+                   @pricehigh,
+                   @priceaverage);
+```
+
+执行名为`productpricing`的存储过程，它计算并返回产品的最低、最高以及平均价格。
+
+## CREATE PROCEDURE
+
+**创建存储过程**
+
+创建一个返回产品平均价格的存储过程：
+
+```mysql
+CREATE PROCEDURE productpricing()
+BEGIN
+	SELECT Avg(prod_price) AS priceaverage
+	FROM products;
+END;
+```
+
+- `CREATE PROCEDURE productpricing()`：创建名为`productpricing`的存储过程，若包含参数，应在括号中列举出来。
+- `BEGIN`和`END`用来限定存储过程体。
+
+**命令行分隔符**
+
+- 如果在命令行中执行，由于"存储过程体"内的分号和`END`后的分号发生了冲突，所以需要重新定义分隔符。
+- 使用关键字`DELIMITER`进行定义。
+- 完成后再换回常规风格符。
+
+如下：
+
+```mysql
+DELIMITER //
+
+CREATE PROCEDURE productpricing()
+BEGIN
+	SELECT Avg(prod_price) AS priceaverage
+	FROM products;
+END //
+
+DELIMITER ;
+```
+
+**执行**
+
+```mysql
+CALL productpricing();
+```
+
+![p126](images/126.png)
+
+## DROP PROCEDURE
+
+删除存储过程时不需要提供`()`。
+
+```mysql
+DROP PROCEDURE productpricing;
+```
+
+**DROP PROCEDURE IF EXISTS**
+
+如果不知道要删除的存储过程存不存在时，可使用语句`DROP PROCEDURE IF EXISTS`,这样就算过程不存在也不会报错。
+
+## 参数
+
+一般存储过程不显示结果，而是把结果返回给过程所指定的变量（variable）。
+
+存储过程没有更新功能，如果想创建一个带参数的`productpricing`过程，就必须把之前创建的同名过程删掉然后重新创建！
+
+```mysql
+CREATE PROCEDURE productpricing(
+    OUT pl DECIMAL(8,2),
+    OUT ph DECIMAL(8,2),
+    OUT pa DECIMAL(8,2)
+)
+BEGIN
+    SELECT Min(prod_price)
+    INTO pl
+    FROM products;
+    SELECT Max(prod_price)
+    INTO ph
+    FROM products;
+    SELECT Avg(prod_price)
+    INTO pa
+    FROM products;
+END //
+```
+
+三种参数类型：
+
+- `OUT`：返回给调用者。
+- `IN`：传递给存储过程。
+- `INOUT`：既能传值给存储过程，又能将值传递给调用者。
+
+变量的数据类型为`DECIMAL`，定义了8个有效位，2个小数位。
+
+通过`INTO`关键字将返回的值注入给变量。
+
+**执行**
+
+```mysql
+CALL productpricing(@pricelow,
+                    @pricehigh,
+                    @priceaverage);
+```
+
+- 所有变量名必须以`@`开头。
+- 向过程传入3个参数用来保存检索到的数据。因为数据存储在了变量汇总，所以执行后不返回任何数据。
+- 需要使用`SELECT`语句查看。
+
+查看数据：
+
+```mysql
+SELECT @pricelow,@pricehigh,@priceaverage;
+```
+
+![p127](images/127.png)
+
+---
+
+再看另外一个例子：
+
+```mysql
+CREATE PROCEDURE ordertotal(
+    IN onumber INT,
+    OUT ototal DECIMAL(8,2)
+)
+BEGIN
+    SELECT Sum(item_price*quantity)
+    FROM orderitems
+    WHERE order_num = onumber
+    INTO ototal;
+END;
+```
+
+CALL：
+
+```mysql
+CALL ordertotal(20005,@total);
+```
+
+SELECT:
+
+```mysql
+SELECT @total;
+```
+
+![p128](images/128.png)
+
+另一个订单的总额：
+
+```mysql
+CALL ordertotal(20009,@total);
+```
+
+SELECT:
+
+```mysql
+SELECT @total;
+```
+
+![p129](images/129.png)
+
+## 高级存储过程
+
+### COMMENT
+
+这增加了一个批示，执行下方语句可以查看信息。此批示不是必须的，可有可无。
+
+```mysql
+-- 查看存储过程的全部详细信息。
+SHOW PROCEDURE STATUS;
+```
+
+![p132](images/132.png)
+
+### DECLARE
+
+定义一个临时变量，即形参。
+
+### IF_THEN_END-IF
+
+就像`java`中的`if_else`.
+
+```mysql
+-- Name: ordertotal
+-- Parameters: onumber = order number
+--             taxable = 0 if not taxable, 1 if taxable
+--             ototal = order total variable
+
+CREATE PROCEDURE ordertotal(
+    IN onumber INT,
+    IN taxable BOOLEAN,
+    OUT ototal DECIMAL(8,2)
+)COMMENT 'Obtain order total, optionally adding tax'
+BEGIN
+    -- Declare variable for total
+    DECLARE total DECIMAL(8,2);
+    -- Delare tax percentage
+    DECLARE taxrate INT DEFAULT 6;
+    
+    -- Get the order total
+    SELECT Sum(item_price*quantity)
+    FROM orderitems
+    WHERE order_num = onumber
+    INTO total;
+    
+    -- Is this taxable?
+    IF taxable THEN
+        -- Tes, so add taxrate to the total
+        SELECT total+(total/100*taxrate) INTO total;
+    END IF;
+    
+    -- And finally, save to out variable
+    SELECT total INTO ototal;
+    
+END;
+```
+
+```mysql
+CALL ordertotal(20005, 0, @total);
+SELECT @total;
+```
+
+![p130](images/130.png)
+
+```mysql
+CALL ordertotal(20005, 1, @total);
+SELECT @total;
+```
+
+![p131](images/131.png)
+
+## 检查存储过程
+
+查看存储过程的创建：
+
+```mysql
+SHOW CREATE PROCEDURE ordertotal; 
+```
+
+返回结果：
+
+```mysql
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ordertotal`(
+    IN onumber INT,
+    IN taxable BOOLEAN,
+    OUT ototal DECIMAL(8,2)
+)
+    COMMENT 'Obtain order total, optionally adding tax'
+BEGIN
+......
+END
+```
+
+- DEFINER：定义者
+- INVOKER：调用者
+
+因为`SHOW PROCEDURE STATUS`会返回相当多的数据，所以可以使用`like`查询：
+
+```mysql
+SHOW PROCEDURE STATUS like 'ordertotal';
+```
+
+# 游标
